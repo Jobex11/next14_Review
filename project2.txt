@@ -1,0 +1,23 @@
+
+ Time Started ==> 3:56:28 
+
+ current time Track ==> 4:45:06
+`
+ 1.  =====  NEXT-AUTH  ====
+ - here we are going to use credentials to 
+ handle authentication.
+
+Created the models folder 
+--> what is the Models folder used for 
+It is used for show how a user should look like.
+
+
+=> when working with next auth 
+--> check documentation in next-auth (credential) to understand folder structures
+ ===== NPM INSTALLATION  ====
+ - npx create-next-app@latest 
+ - npm i bcryptjs mongoose next-auth react-toastify 
+ 
+
+ =====  ERRORS TO FIX ==== 
+ - Google  4:44:...

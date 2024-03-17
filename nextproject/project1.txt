@@ -1,0 +1,215 @@
+time: 2:40:19 
+
+current time: 3:56:00
+
+
+
+PROJECT => FAKE USER MANAGEMENT 
+1  ====  INSTALLING TAILWIND CSSS COMPNENTS ====
+
+
+2. BACKEND
+
+--> here we are going to make a fake user
+management project. 
+
+=====  NPM INSTALLATION  =====
+- npm i @material-tailwind/react 
+[material tailwind react]
+we did some settings in the tailwind.config 
+-
+-
+-
+
+
+ROUTE.JS FILE USERS
+
+import { users } from "@/app/util/db";
+import { NextResponse } from "next/server";
+import fs from "fs";
+// 1. All users Data
+export function GET() {
+  const data = users;
+  return NextResponse.json(
+    { data },
+    {
+      status: 200,
+    }
+  );
+}
+
+// 4. CREATE User
+export async function POST(req, res) {
+  let { id, name, email, password } = await req.json();
+
+  //Check if the data is provided
+  if (!id || !name || !email || !password) {
+    return NextResponse.json(
+      { result: "required field not found" },
+      { status: 400 }
+    );
+  } else {
+    //add the new user to the in-memory array
+    users.push({ id, name, email, password });
+    //Extract just the user array from the updated data
+    const updatedUsersArray = users;
+    // Convert the updated users array to a JSON string
+    const updatedData = JSON.stringify(updatedUsersArray, null, 2);
+    // write the updated users array to a JSON string
+    fs.writeFileSync(
+      "./app/util/db.js",
+      `export const users= ${updatedData}`,
+      "utf-8"
+    );
+    return NextResponse.json({ success: "User Successfully created" });
+  }
+}
+
+
+THE OTHER ROUTE.JS FILE [ID]
+
+import { users } from "@/app/util/db";
+import { NextResponse } from "next/server";
+
+// 2. Get Specific users
+export async function GET(_, res) {
+  const { id } = await res.params;
+  const user = users.filter((u) => u.id == id);
+  return NextResponse.json({ user });
+}
+
+//3. Login
+export async function POST(req, res) {
+  let { name, email, password } = await req.json();
+  const { id } = await res.params;
+
+  const {
+    name: uName,
+    email: uEmail,
+    password: upassword,
+  } = users.find((u) => u.id == id);
+
+  if (uName == name && uEmail == email && upassword == password) {
+    return NextResponse.json({ result: "Successfully logged in" });
+  } else if (!name || !email || !password) {
+    return NextResponse.json({ result: "Please fill all the input fields" });
+  } else {
+    return NextResponse.json({ result: "Invalid Credentials" });
+  }
+}
+
+
+====== 4  CREATE NEW USER ======
+
+
+// 4. CREATE User
+export async function POST(req, res) {
+  let { id, name, email, password } = await req.json();
+
+  //Check if the data is provided
+  if (!id || !name || !email || !password) {
+    return NextResponse.json(
+      { result: "required field not found" },
+      { status: 400 }
+    );
+  } else {
+    //add the new user to the in-memory array
+    users.push({ id, name, email, password });
+    //Extract just the user array from the updated data
+    const updatedUsersArray = users;
+    // Convert the updated users array to a JSON string
+    const updatedData = JSON.stringify(updatedUsersArray, null, 2);
+    // write the updated users array to a JSON string
+    fs.writeFileSync(
+      "./app/util/db.js",
+      `export const users= ${updatedData}`,
+      "utf-8"
+    );
+    return NextResponse.json({ success: "User Successfully created" });
+  }
+}
+
+
+
+
+ ===== 5  UPDATE USERS ===
+
+TIME: 3:07:07
+
+
+//5. Update User
+
+export async function PUT(req, res) {
+  let { id, name, email, password } = await req.json();
+
+  //find the user in the users array
+  const userIndex = users.findIndex((user) => user.id == id);
+  if (userIndex == -1) {
+    return NextResponse.json({ result: "User not found" }, { status: 404 });
+  }
+  if (name) {
+    users[userIndex].name = name;
+  }
+  if (email) {
+    users[userIndex].email = email;
+  }
+  if (password) {
+    users[userIndex].password = password;
+  }
+  //Extract just the user array from the updated data
+  const updatedUsersArray = users;
+  // Convert the updated users array to a JSON string
+  const updatedData = JSON.stringify(updatedUsersArray, null, 2);
+  // write the updated users array to a JSON string
+  fs.writeFileSync(
+    "./app/util/db.js",
+    `export const users= ${updatedData}`,
+    "utf-8"
+  );
+  return NextResponse.json({ success: "User Successfully Updated" });
+}
+
+
+
+===== 6. DELETE USER =====
+TIME: 3:13:12
+
+
+
+// 6.  DELETE USER
+
+export async function DELETE(req, res) {
+  const { id } = await res.params;
+
+  // Fint the index of the ser to delete in the users array
+  const userIndex = users.findIndex((user) => user.id == id);
+  if (userIndex == -1) {
+    return NextResponse.json({ result: "User not found" }, { status: 404 });
+  }
+  //Remove the user from the users array..
+  users.splice(userIndex, 1);
+  //Extract just the user array from the updated data
+  const updatedUsersArray = users;
+  // Convert the updated users array to a JSON string
+  const updatedData = JSON.stringify(updatedUsersArray, null, 2);
+  // write the updated users array to a JSON string
+  fs.writeFileSync(
+    "./app/util/db.js",
+    `export const users= ${updatedData}`,
+    "utf-8"
+  );
+  return NextResponse.json({ success: "User Successfully Deleted" });
+}
+
+
+
+
+
+3.  FRONT END 
+
+
+=====  FURTHER LEARNING  ======
+
+- Node module FS module(file system) 
+- 
+

@@ -1,0 +1,637 @@
+time: 2:40:00
+
+1 BACKEND DEVELOPMENT 
+time: 1:50:10 
+
+- when working with backend you have to create a special folder  
+called the api where all your api routes is going to be placed
+
+app -> api -> users -> route.js
+ 
+nb ==> we view console.log of client component on the web page 
+and the 
+console.log of server component on the console of the vscode
+
+
+
+  FURTHER LEARNING 
+
+ ====> BACKEND METHOD 
+ Method refers to the functions or procedures that handle various 
+ tasks or operations on the server side of a web application. 
+ theses methods are written in languages like  python, javascipt(node.js), 
+ java, ruby etx. depending on the technology stack chosen for 
+ the project. 
+
+ METHODS AND TECHNIQUES USED IN BACKEND 
+ 1. HTTP METHOD -> these are fundamental methods used in we development 
+ to define the action to be performed for a give resources.
+ The common methods are 
+ - GET : retreives data from the server.  
+ - POST : Submites data to be processed to the server. 
+ - PUT : updates and existin resources. 
+ - DELETE: delete a resources. 
+ - PATCH: partially updates a resource. 
+ - OPTIONS: returns the supported http methods by the server 
+ for a special URL 
+
+2. ROUTING -> Is a process that defines how an application 
+respond to client request to a particular endpoint, typically based 
+on the http method and url path. 
+- routing is handled using framework like  
+express.js(node.js),django(python), spring boot(java) 
+
+3. CONTROLLER METHODS -> In MVC(model-view-controller) architecture, 
+controller methods handle incoming requests, process data, 
+and return response. 
+- these method interact with the model(data) and views(presentation layer) to 
+fulfill client requests. 
+
+4. DATABASE METHODS -> backend application often interact 
+with the databases to store and retrieve data. Database methods include 
+CRUD 
+CRUD -> [Create, Read, update, Delete] operations. 
+these correspond to the basic actions performed on a data. 
+
+5. AUTHENTICATION AND AUTHORIZATION METHODS -> These methods handle 
+user authentication(verifying user identity) 
+and authorization(granting or denying access to resources based on 
+user permissions). 
+techniques like 
+- JWT [json web token]
+- OAuth 
+- session management 
+are commonly used for authentication and authorization. 
+
+6. MIDDLEWARE -> middleware fnctio s are intermediate functions that  have 
+access to the request and response objects in the HTTP request-response 
+cycle. 
+They can perform task such as 
+- logging 
+- authentication 
+- data parsing  etc 
+before passing control to the next middleware function or the  
+route handler.
+
+7. ERROR HANDLING -> backend methods shoudl include error 
+handling mechanism to gracefully handle 
+- exceptions 
+- validat input data 
+- return appropriate errors responses to clients.
+
+
+DESIGNING THE ROUTE.JS 
+
+import { NextResponse } from "next/server";
+export function GET() {
+  return NextResponse.json({ result: "hello" });
+}
+
+-> you can use a status code to return  a status 
+{status: 404} -> is not really neccesary
+
+
+STATUS CODE AND MEANING 
+- 1xx informational
+100 continue
+101 switching
+- 2xx success 
+200 ok 
+201 created 
+204 No content
+- 3xx redirection 
+301 moved permanently 
+304 not modified 
+- 4xx client error
+400 bad request 
+401 unauthorized 
+404 not found
+- 5xx server error
+500 internal server error 
+503 service unavailable
+
+
+2 DYAMIC ROUTES IN THE BACKEND 
+time: 1:57:03  
+[id]-> route.js 
+import { NextResponse } from "next/server";
+export function GET(_, response) {
+  const { id } = response.params;
+  return NextResponse.json({ id });
+}
+
+
+WRITING OUR OWN API 
+
+export const users = [
+  {
+    id: "1",
+    name: "Job",
+    age: 24,
+    email: "joblawal33@gmail.com",
+    password: "1245",
+  },
+  {
+    id: "2",
+    name: "John",
+    age: 22,
+    email: "johnayodele@gmail.com",
+    password: "4532",
+  },
+  {
+    id: "3",
+    name: "Joshua",
+    age: 25,
+    email: "gracefullygraced@gmail.com",
+    password: "4983",
+  },
+  {
+    id: "4",
+    name: "mercy",
+    age: 19,
+    email: "mercyconfidence@gmail.com",
+    password: "0983",
+  },
+];
+
+
+link the api you created to the route.js 
+
+import { NextResponse } from "next/server";
+import { users } from "@/app/util/db";
+export function GET() {
+  const data = users;
+  return NextResponse.json({ data });
+}
+
+
+3. MIDDLEWARE
+
+IN NEXT.JS middleware are functions or pieces of code that run 
+in between a user's request to a web page and the server's 
+response. They help you process and modify the request or  
+response, adding extra functionality to your web application.
+
+REQUEST ---> middleware <---  RESPONSE
+
+Middleware allows yo to run code before a request is completed. 
+-middleware runs before cached content and routes are matched.
+
+
+PURPOSE OF MIDDLEWARE
+- abstraction - integration - Data transformation - Security 
+- Scalability and Performance - Monitoring and Managements
+
+
+import { NextResponse } from "next/server";
+
+export function middleware(requst) {
+  console.log("middleware ran");
+  return NextResponse.json({ success: "successfully ran" });
+}
+
+export const config = {
+  matcher: ["/userslist/:path*"],
+};
+
+
+Example with login 
+
+import { NextResponse } from "next/server";
+
+export function middleware(request) {
+  console.log("middleware ran");
+  if (request.nextUrl.pathname !== "/login") {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+  return NextResponse.json({ success: "successfully ran" });
+}
+
+export const config = {
+  matcher: ["/userslist/:path*"],
+};
+
+
+->Middleware Using nextjs redirect
+
+import { NextResponse } from "next/server";
+
+export function middleware(request) {
+  return NextResponse.redirect(new URL("/login", request.url));
+}
+
+export const config = {
+  matcher: ["/userslist/:path*"],
+};
+
+
+
+
+4.  ENVIRONMENT VARIABLES 
+time: 2:10:42
+- .env
+- .env.local -> preferred for nextjs  
+
+create the .env.local file inside the root directory 
+of your project.
+
+
+example 
+
+MONGO_URI = "C232DDDSDV"
+JWT_SECRET = "323HFKDKKSLDF"
+NODE_ENV = "2EISOSDFLSKDLCKLSDK" 
+
+with random folder. .. 
+
+const Page = () => {
+  console.log(process.env.MONGO_URI);
+  console.log(process.env.JWT_SECRET);
+  console.log(process.env.NODE_ENV);
+  return (
+    <div>
+      {process.env.MONGO_URI ? (
+        <h1>DB Successfully Connected</h1>
+      ) : (
+        <h1>404 DB Not Found</h1>
+      )}
+    </div>
+  );
+};
+
+export default Page;
+
+
+
+
+
+POST METHOD 
+- you can use the post method 
+or install thunder client extension from you vscode.
+Postman : is a tool used in backend development for 
+testing APIs(Application programming interfaces). 
+- developers can easily create request for different HTTP  
+methods( GET, POST, PUT, DELETE) and analyze the result. 
+
+===> dummy data api
+
+HTTP METHODS 
+- GET  - POST   - PUT  - PATCH  -DELETE -
+- HEAD  - OPTIONS 
+
+...working with Postman  
+api-> users -> route.js 
+
+import { NextResponse } from "next/server";
+export async function POST(req, res) {
+  let data = await req.json();
+  console.log(data);
+
+  return NextResponse.json({ res: "data send successfully" });
+}
+
+
+- when working with POST method in postman 
+body->raw->json 
+select https://localhost:3000/api/users   
+
+
+another post method  
+
+import { NextResponse } from "next/server";
+export async function POST(req, res) {
+  let { username, password } = await req.json();
+  console.log(username, password);
+  return NextResponse.json({ res: "data send successfully" });
+}
+
+
+
+SENDING POST REQUEST WITH CODE EXAMPLE 
+
+api/users/route.js 
+
+import { NextResponse } from "next/server";
+
+export async function POST(req, res) {
+  let { name, age, email } = await req.json();
+
+  if (!name || !age || !email) {
+    return NextResponse.json(
+      { error: "required filled not found", ok: false },
+      { status: 400 }
+    );
+  }
+
+  return NextResponse.json(
+    {
+      res: "Credentials verified, User succesfully logged in.",
+      ok: true,
+    },
+    { status: 201 }
+  );
+}
+
+
+addnewuser/page.js
+
+"use client";
+import { useState } from "react";
+const AddNewUser = () => {
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [email, setEmail] = useState("");
+
+  const addNewUserHandler = async () => {
+    let response = await fetch("api/users", {
+      method: "POST",
+      body: JSON.stringify({ name, age, email }),
+    });
+    response = await response.json();
+    if (response.ok) {
+      alert("User successfully created");
+    } else {
+      alert("An Error Occured while creating the new user");
+    }
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        onChange={(e) => setName(e.target.value)}
+        value={name}
+        placeholder="Please Enter your Name"
+        className="ml-2 mr-4 mt-4"
+      />
+      <br />
+      <input
+        type="number"
+        onChange={(e) => setAge(e.target.value)}
+        value={age}
+        placeholder="Please Enter your Age"
+        className="ml-2 mr-4 mt-4"
+      />
+      <br />
+      <input
+        type="text"
+        onChange={(e) => setEmail(e.target.value)}
+        value={email}
+        placeholder="Please Enter your Email"
+        className="ml-2 mr-4 mt-4"
+      />
+      <br />
+      <button
+        className="bg-black text-white border p-2"
+        onClick={addNewUserHandler}
+      >
+        Add New User
+      </button>
+    </div>
+  );
+};
+
+export default AddNewUser;
+
+
+
+
+
+
+
+===== NPM INSTALLATION ====
+===== FURTHER LEARNING =====
+- destructuring
+- asynchronous programming 
+- react toast  
+
+
+
+
+
+
+
+===== DESTRUCTURING ==== 
+
+Destructuring in js is a convenient way to extract values from an 
+arrays or objects and assign them to variables in a single 
+statement. 
+-> It is often used to unpack values from array or 
+properties from objects into a distinc variables. 
+
+ ARRAY DESTRUCTURING 
+
+const numbers = [1, 2, 3, 4, 5];
+
+// Extracting values from the array
+const [first, second, ...rest] = numbers;
+
+console.log(first); // Output: 1
+console.log(second); // Output: 2
+console.log(rest); // Output: [3, 4, 5]
+
+
+OBJECT DESTRUCTURING 
+
+const person = {
+  name: 'John',
+  age: 30,
+  country: 'USA'
+};
+
+// Extracting properties from the object
+const { name, age, country } = person;
+
+console.log(name); // Output: John
+console.log(age); // Output: 30
+console.log(country); // Output: USA
+
+
+DEFAULT VALUES 
+
+const settings = { theme: 'dark' };
+
+// Assigning default value if property not present
+const { theme, font = 'Arial' } = settings;
+
+console.log(theme); // Output: dark
+console.log(font); // Output: Arial
+
+
+NESTED DESTRUCTURING 
+
+const user = {
+  id: 101,
+  name: 'Alice',
+  address: {
+    city: 'New York',
+    country: 'USA'
+  }
+};
+
+// Nested object destructuring
+const { name, address: { city, country } } = user;
+
+console.log(name); // Output: Alice
+console.log(city); // Output: New York
+console.log(country); // Output: USA
+
+
+===>> in summary,  destructuring makes code more concise and 
+readable, especially when dealing with complex data structures 
+like arrays of objects or deeply nested objects. 
+
+
+=====  ASYNCHRONOUS PROGRAMMING ======
+
+It is used to handle tasks like Fetching data from server, 
+processing user input, and updating the user interface without 
+blocking the main thread.  
+-> asynchronour programming in javascript is primarily achieved 
+through [callbacks, promises, async/await]
+
+CALLBACKS 
+
+callbacks are functions passed as arguments to other functions, 
+which are often invoked once an asynchronous operation completes. 
+
+
+function fetchData(callback) {
+  setTimeout(() => {
+    callback("Data fetched successfully");
+  }, 1000);
+}
+
+console.log("Fetching data...");
+fetchData((data) => {
+  console.log(data);
+});
+
+
+PROMISES 
+
+Promises provide a cleaner way to handle asynchronous 
+operation and avoid callback hell. 
+- they represent a value that may be available 
+[now, in the future, never]. 
+
+
+function fetchData() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Data fetched successfully");
+    }, 1000);
+  });
+}
+
+console.log("Fetching data...");
+fetchData().then((data) => {
+  console.log(data);
+});
+
+
+ASYNC/AWAIT 
+
+
+Async/await is a modern appraoch to asynchronous programming in 
+javascript, Introduced in ES2017( ES8). 
+- It allows writing asynchronous code in a synchronous-looking 
+manner , making it more readable and easier to understand. 
+
+
+async function fetchData() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Data fetched successfully");
+    }, 1000);
+  });
+}
+
+async function getData() {
+  console.log("Fetching data...");
+  const data = await fetchData();
+  console.log(data);
+}
+
+getData();
+
+
+
+====== REACT TOAST ====
+
+React toast is a component commonly used in web development 
+to display non-intrusive notifications or messages to users. 
+ they are used to 
+ - display messages 
+ - animation transition
+ - user interaction 
+ - queue management 
+ - accessibility 
+
+
+example 
+
+import React, { useState } from 'react';
+import './Toast.css'; // Import CSS for styling (you can customize this)
+
+const Toast = ({ message, duration = 3000 }) => {
+  const [visible, setVisible] = useState(true);
+
+  // Hide the toast after a specified duration
+  setTimeout(() => {
+    setVisible(false);
+  }, duration);
+
+  return (
+    <div className={`toast ${visible ? 'show' : ''}`}>
+      <div className="toast-content">{message}</div>
+    </div>
+  );
+};
+
+export default Toast;
+
+
+-- toast.css 
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.toast-content {
+  font-size: 14px;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+
+-- toast component 
+
+
+
+import React from 'react';
+import Toast from './Toast';
+
+const App = () => {
+  return (
+    <div>
+      <h1>React Toast Example</h1>
+      <button onClick={() => alert('Button clicked!')}>Show Toast</button>
+      <Toast message="This is a toast message!" />
+    </div>
+  );
+};
+
+export default App;
+
