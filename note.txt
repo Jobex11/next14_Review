@@ -1,0 +1,7 @@
+CRUD OPERATION USING POSTMAN 
+
+time 2:44:49
+
+1.  to get all users 
+
+

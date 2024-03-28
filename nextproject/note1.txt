@@ -2,7 +2,7 @@
   ======   NEXT14 FULL COURSE =======
 TIME: 1:52:38s
 
-Next.js is an open-source javascript framework that is build on 
+1. Next.js is an open-source javascript framework that is build on 
 to of react.
 is a populary js library for building  user interfaces. 
 It is designed to make it eaiser to create SERVER-RENDERED react application 
@@ -18,7 +18,7 @@ FEATURES
 on the server side before sending them to the client.  
 (this improve page load and SEO, as engines can easily index content) 
 
-- STATE SITE GENERATION(SSG) -> you can pre-render pages
+- STATIC SITE GENERATION(SSG) -> you can pre-render pages
 at build time. 
 (this approach is great for content heavy websites and  can  offer 
 even better performance and SEO benefits)
@@ -47,7 +47,7 @@ Do not delete cause it prompts error
 
 Routing is like giving directions to a website. 
 when you type a web address (url) int your browser, routing tells 
-the wrbsites which pae or thing to show you. It's like a map that 
+the wrbsites which page or thing to show you. It's like a map that 
 guides the websites to the right place when you click a link or 
 enter a web address. So, routing helps the website know that to 
 display based on what you are lookng for.
@@ -103,13 +103,12 @@ export default function RootLayout({ children }) {
   );
 }
 
-
 4. useRouter()
 
 - useRouter is a hook provided by nextjs that allows you to access the router 
-object and its properties withing you component 
+object and its properties withing your component 
 
-- It provides prgrammatic control over the router and 
+- It provides programmatic control over the router and 
 allows you to navigate to different pags or perform other 
 routing-related actions in response to user interactions or 
 events within your component. 
@@ -349,7 +348,7 @@ what components React should render on the client.
 benefits of Client Rendering 
 - Interactivity: client components use use  
 state, effects, and event listeners, meaining they can provide 
-immediate feedbakc to user and update the UI. 
+immediate feedback to user and update the UI. 
 
 - Browser APIs: client components have access to browsers ApIs, 
 lie geolocation or localStorage, allowing you to build UI for  
@@ -358,7 +357,7 @@ specific use cases.
 WHEN TO USE SERVER COMPONENTS 
 - access backend resources (directly)
 - keep sensitive information on the sever 
-(access toekns, api keys etc) 
+(access token, api keys etc) 
 - keep large dependencies on the server/ Reduce client-side 
 javascript. 
 WHEN TO USE CLIENT SIDE 
@@ -366,7 +365,7 @@ WHEN TO USE CLIENT SIDE
 (onclick(),  onchange())
 - use state and lifecycle effects
 (useState(), useReducer(), useEffect(), etc)
-- use Browser-onlu APIs- use custom hooks that depend on the 
+- use Browser-only APIs- use custom hooks that depend on the 
 state, effect or browser-only APIs 
 - use react class components
 
@@ -523,7 +522,7 @@ const Data = () => {
 export default Data;
 
 
-11 FETCHIN DATA USING SERVER COMPONENTS 
+12 FETCHIN DATA USING SERVER COMPONENTS 
 time: 1:47:37
 
 -> it must be an asynchronous programming 
@@ -565,6 +564,4 @@ components
  [it creates it in the current directory]
  - npm run build 
  (creates  .next  -> which can be deleted without breaking the code)
-
-
 

@@ -14,6 +14,7 @@ console.log of server component on the console of the vscode
 
 
 
+
   FURTHER LEARNING 
 
  ====> BACKEND METHOD 
@@ -24,12 +25,12 @@ console.log of server component on the console of the vscode
  the project. 
 
  METHODS AND TECHNIQUES USED IN BACKEND 
- 1. HTTP METHOD -> these are fundamental methods used in we development 
- to define the action to be performed for a give resources.
+ 1. HTTP METHOD -> these are fundamental methods used in web development 
+ to define the action to be performed for a given resources.
  The common methods are 
  - GET : retreives data from the server.  
  - POST : Submites data to be processed to the server. 
- - PUT : updates and existin resources. 
+ - PUT : updates and existing resources. 
  - DELETE: delete a resources. 
  - PATCH: partially updates a resource. 
  - OPTIONS: returns the supported http methods by the server 
@@ -63,7 +64,7 @@ techniques like
 - session management 
 are commonly used for authentication and authorization. 
 
-6. MIDDLEWARE -> middleware fnctio s are intermediate functions that  have 
+6. MIDDLEWARE -> middleware functions are intermediate functions that  have 
 access to the request and response objects in the HTTP request-response 
 cycle. 
 They can perform task such as 
@@ -164,6 +165,10 @@ export function GET() {
   return NextResponse.json({ data });
 }
 
+
+postman ==> is a tools that allows developers to test APIs by sending  
+request (GET, POST, PUT , DELETE) to api endpoint and  
+inspecting the responses.
 
 3. MIDDLEWARE
 
@@ -293,7 +298,7 @@ export async function POST(req, res) {
 
 - when working with POST method in postman 
 body->raw->json 
-select https://localhost:3000/api/users   
+select http://localhost:3000/api/users   
 
 
 another post method  
