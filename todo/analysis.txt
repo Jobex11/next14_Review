@@ -1,0 +1,32 @@
+
+==== JOB TODO ===
+
+- CREATE TOPICS 
+- ADD TODO TO THE TOPICS 
+- 
+ 
+
+ uniqueness 
+ - gmail track to get notified 
+ when an event is due 
+
+ - suggestions: showing things which are 
+ important 
+ 
+
+ =====     ======
+    PROJECT IN VIEW 
+ =====     ======
+
+ NAVIGATION COMPONENTS 
+ - login users 
+ - app title 
+ - home page navigator 
+
+SIDENAV 
+
+
+TODOLIST 
+SUGGESTION
+
+DATABASE COMPLICATION

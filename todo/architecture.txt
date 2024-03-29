@@ -1,34 +1,4 @@
-import React from "react";
-import Sidenav from "./Sidenav";
-import Suggestion from "./Suggestion";
-import TodoList from "./TodoList";
-import Navbar from "./Navbar";
-const Home = () => {
-  return (
-    <div className="bg-gray-100 h-screen w-screen flex flex-col">
-      <div className="">
-        <Navbar />
-      </div>
-      <div className="flex-1 grid grid-cols-3 h-inherit">
-        <section className=" p-4">
-          <Sidenav />
-        </section>
-        <section className="p-4 bg-blue-800 bg-opacity-60 text-white">
-          <TodoList />
-        </section>
-        <section className=" p-4">
-          <Suggestion />
-        </section>
-      </div>
-    </div>
-  );
-};
-
-export default Home;
-
-/*
-
-
+==== PAGE FILE ====
 "use client";
 import React, { useState } from "react";
 import TodoItem from "../components/TodoItem";
@@ -89,4 +59,43 @@ const Home = () => {
 
 export default Home;
 
-*/
+
+
+====  TODOITEM ====
+
+
+"use client";
+import React, { useState } from "react";
+
+const TodoItem = ({ todo, onDelete, onEdit }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText] = useState(todo.text);
+
+  const handleEditChange = (e) => {
+    setEditedText(e.target.value);
+  };
+
+  const handleEditSubmit = () => {
+    onEdit(todo.id, editedText);
+    setIsEditing(false);
+  };
+
+  return (
+    <div>
+      {isEditing ? (
+        <div>
+          <input type="text" value={editedText} onChange={handleEditChange} />
+          <button onClick={handleEditSubmit}>Save</button>
+        </div>
+      ) : (
+        <div>
+          <span>{todo.text}</span>
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <button onClick={() => onDelete(todo.id)}>Delete</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default TodoItem;
