@@ -30,3 +30,9 @@ TODOLIST
 SUGGESTION
 
 DATABASE COMPLICATION
+
+
+=====   =====
+   NPM INSTALLATIONS 
+=====   =====
+- npm install @mui/material @emotion/react @emotion/styled
